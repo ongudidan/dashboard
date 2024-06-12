@@ -14,8 +14,12 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $database->query('SELECT * FROM users WHERE email = :email;');
-    $database->resultset(':email', $email);
+    $database->query('SELECT * FROM users WHERE email = :email AND pass = :pass;');
+    $database->bind(':email', $email);
+    $database->bind(':pass', $password);
+
+    $database->execute();
+
     $row = $database->single();
 
     if (!empty($row)) {

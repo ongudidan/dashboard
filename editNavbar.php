@@ -1,6 +1,14 @@
 <?php
+session_start();
 
-require ("modelClass.php");
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+  // User is not logged in, redirect to login page
+  header("Location: login.php");
+  exit();
+}
+
+
+require("modelClass.php");
 
 $auth->authorize();
 
@@ -56,7 +64,7 @@ $row = $database->single();
                   <div class="card-header">
                     <h4>Edit the navigation bar</h4>
                   </div>
-                  <form id="form" enctype="multipart/form-data">
+                  <form id="#" action="controllers/navController.php" method="POST" enctype="multipart/form-data">
                     <div class="card-body">
                       <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Call us at</label>
