@@ -1,8 +1,6 @@
 <?php
 
 require ("modelClass.php");
-require ('controllers/AuthManager.php');
-
 
 $auth->authorize();
 
