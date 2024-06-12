@@ -1,8 +1,10 @@
 // Variable to hold request
 var request;
 
+
+// EDITNAV FORM SWEETALERT
 // Bind to the submit event of our form
-$("#nav").submit(function (event) {
+$("#form").submit(function (event) {
   // Prevent default posting of form - put here to work in case of errors
   event.preventDefault();
 
@@ -26,7 +28,7 @@ $("#nav").submit(function (event) {
 
   // Fire off the request to /form.php
   request = $.ajax({
-    url: "post.php",
+    url: "controllers/navController.php",
     type: "post",
     data: serializedData,
   });
@@ -37,7 +39,7 @@ $("#nav").submit(function (event) {
     // console.log("Hooray, it worked!");
     Swal.fire({
       icon: "success",
-      text: "save successful",
+      text: "successful",
       showConfirmButton: false,
       timer: 1500,
     }).then(function (result) {
@@ -60,3 +62,4 @@ $("#nav").submit(function (event) {
     $inputs.prop("disabled", false);
   });
 });
+

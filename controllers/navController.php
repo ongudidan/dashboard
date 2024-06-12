@@ -3,10 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require 'modelClass.php';
-
-$database->query('SELECT * FROM navbar WHERE id = 1;');
-$data = $database->single();
+require '../modelClass.php';
 
 if (isset($_POST['submit'])) {
     // Get user input from the form
@@ -15,16 +12,6 @@ if (isset($_POST['submit'])) {
     $physical_address = $_POST['physical_address'];
 
     $logo = $_FILES['logo'];
-
-    if(is_null($logo)){
-
-        $logoName = $data['name'];
-        $logoType = $data['type'];
-        $logoTmpName = $data['tmp_name'];
-        $logoError = $data['error'];
-        $logoSize = $data['size'];
-
-    }
 
     $logoName = $logo['name'];
     $logoType = $logo['type'];
@@ -44,19 +31,13 @@ if (isset($_POST['submit'])) {
     if ($logoSize < 9000000) {
         // $logoNameNew = uniqid('', true) . '.' . $logoActualExt;
 
-        $logoDestination = 'uploads/' . $logoName;
+        $logoDestination = '../uploads/' . $logoName;
+        $logoDestination2 = 'uploads/' . $logoName;
+
+
         move_uploaded_file($logoTmpName, $logoDestination);
 
         $id = 1;
-
-        // if (is_null($logo)) {
-
-        //     $logoName = $row['logoName'];
-        //     $logoType = $logo['logoType'];
-        //     $logoDestination = $logo['logoDestination'];
-        //     $logoActualExt = $logo['logoActualExt'];
-        //     $logoSize = $logo['logoSize'];
-        // }
 
 
         // Check if a record with id=1 exists
@@ -83,7 +64,7 @@ if (isset($_POST['submit'])) {
             $database->bind(':logoName', $logoName);
             $database->bind(':logoType', $logoType);
             $database->bind(':logoSize', $logoSize);
-            $database->bind(':logoDestination', $logoDestination);
+            $database->bind(':logoDestination', $logoDestination2);
             $database->bind(':logoActualExt', $logoActualExt);
             $database->bind(':id', $id);
 
@@ -108,7 +89,7 @@ if (isset($_POST['submit'])) {
 
         // return true;
 
-        header("Location: editNavbar.php");
+        header("Location: ../editNavbar.php");
         exit();
 
 

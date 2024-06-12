@@ -1,6 +1,10 @@
 <?php
 
-include("modelClass.php");
+require ("modelClass.php");
+require ('controllers/AuthManager.php');
+
+
+$auth->authorize();
 
 $database->query('SELECT * FROM navbar WHERE id = 1;');
 $row = $database->single();
@@ -38,11 +42,11 @@ $row = $database->single();
 
       <!-- NAVBAR SECTION  -->
       <?php
-      include("navbar.php");
+      include("components/navbar.php");
       ?>
 
       <?php
-      include("main-sidebar.php");
+      include("components/main-sidebar.php");
       ?>
       <!-- Main Content -->
       <div class="main-content">
@@ -54,7 +58,7 @@ $row = $database->single();
                   <div class="card-header">
                     <h4>Edit the navigation bar</h4>
                   </div>
-                  <form id="" action="post.php" method="POST" enctype="multipart/form-data">
+                  <form id="form" enctype="multipart/form-data">
                     <div class="card-body">
                       <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Call us at</label>
@@ -103,18 +107,18 @@ $row = $database->single();
         <!-- SETTING SIDEBAR SECTION  -->
 
         <?php
-        include("setting-sidebar.php");
+        include("components/setting-sidebar.php");
         ?>
       </div>
       <!-- FOOTER SECTION  -->
       <?php
-      include("main-footer.php");
+      include("components/main-footer.php");
       ?>
     </div>
   </div>
-  <script src="jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
-  <script src="form.js"></script>
+  <script src="assets/js/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/sweetalert2.all.min.js"></script>
+  <script src="assets/js/editnav.js"></script>
   <!-- General JS Scripts -->
   <script src="assets/js/app.min.js"></script>
   <!-- JS Libraies -->
