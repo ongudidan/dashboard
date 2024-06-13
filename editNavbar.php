@@ -7,10 +7,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   exit();
 }
 
-
 require("modelClass.php");
-
-$auth->authorize();
 
 $database->query('SELECT * FROM navbar WHERE id = 1;');
 $row = $database->single();
