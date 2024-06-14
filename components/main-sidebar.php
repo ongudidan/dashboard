@@ -11,6 +11,8 @@
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="layout"></i><span>HOME PAGE</span></a>
                 <ul class="dropdown-menu">
                     <li class="active"><a class="nav-link" href="editNavbar.php">Navigation bar</a></li>
+                    <li class="active"><a class="nav-link" href="menubar.php">Menu's</a></li>
+
                 </ul>
             </li>
 

@@ -43,6 +43,7 @@ if (isset($_POST['submit'])) {
         // Check if a record with id=1 exists
         $database->query('SELECT COUNT(*) AS count FROM navbar WHERE id = :id');
         $database->bind(':id', $id);
+        $database->execute();
         $row = $database->single();
 
         if ($row['count'] > 0) {

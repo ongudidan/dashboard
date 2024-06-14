@@ -44,7 +44,7 @@ if (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true) {
                 <h4>Register</h4>
               </div>
               <div class="card-body">
-                <form id="form" action="controllers/registerController.php" method="POST">
+                <form id="" action="controllers/registerController.php" method="POST">
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="frist_name">First Name</label>
@@ -68,7 +68,7 @@ if (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == true) {
                     </div>
                     <div class="form-group col-6">
                       <label for="password2" class="d-block">Password Confirmation</label>
-                      <input id="password2" type="password" class="form-control" name="password-confirm">
+                      <input id="password2" type="password" class="form-control" name="pass_confirm">
                     </div>
                   </div>
                   <div class="form-group">

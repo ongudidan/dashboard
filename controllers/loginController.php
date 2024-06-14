@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 
     $database->query('SELECT * FROM users WHERE email = :email AND pass = :pass;');
     $database->bind(':email', $email);
-    $database->bind(':pass', $password);
+    $database->bind(':pass', md5($password));
 
     $database->execute();
 
@@ -24,13 +24,14 @@ if (isset($_POST['submit'])) {
 
     if (!empty($row)) {
 
-        if ($password === $row['pass']) {
+        if (md5($password) === $row['pass']) {
             $_SESSION['loggedin'] = true;
             $_SESSION['email'] = $email;
             header("Location: ../dashboard.php");
 
         } else {
             $_SESSION['error'] = "Invalid password.";
+            // unset($_SESSION['error']);
             header("Location: ../login.php");
             exit();
         }
