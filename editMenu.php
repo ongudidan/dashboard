@@ -11,8 +11,15 @@ $error = $_SESSION['ERROR'];
 
 require("modelClass.php");
 
-$database->query('SELECT * FROM navbar WHERE id = 1;');
+$id = $_GET['id'];
+
+$database->query('SELECT * FROM menus WHERE id = :id;');
+$database->bind(':id',$id);
+$database->execute();
 $row = $database->single();
+
+$_SESSION['id'] = $id;
+
 
 ?>
 
@@ -68,14 +75,14 @@ $row = $database->single();
                                             <div class="form-group row mb-4">
                                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Menu name</label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    <input name="title" value="" type="text" class="form-control">
+                                                    <input name="title" value="<?= $row['title'] ?>" type="text" class="form-control">
                                                     <div><?= $_SESSION['title_error']; ?></div>
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
                                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Link</label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    <input name="link" value="" type="" class="form-control">
+                                                    <input name="link" value="<?= $row['link'] ?>" type="" class="form-control">
                                                     <div><?= $_SESSION['link_error']; ?></div>
                                                 </div>
                                             </div>
@@ -107,10 +114,10 @@ $row = $database->single();
         </div>
 
         <?php
-         unset($_SESSION['title_error']);
-        unset($_SESSION['link_error']); 
+        unset($_SESSION['title_error']);
+        unset($_SESSION['link_error']);
 
-        
+
         ?>
     </div>
     <script src="assets/js/jquery-3.7.1.min.js"></script>

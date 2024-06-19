@@ -1,3 +1,16 @@
+<?php
+require('modelClass.php');
+
+
+$database->query('SELECT * FROM menus');
+$database->execute();
+$data = $database->resultset();
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +55,7 @@
                   </div>
                   <div class="card-body">
                     <div class="float-right">
-                      <a href="#" class="btn btn-success">ADD MENU ITEM</a>
+                      <a href="editMenu.php" class="btn btn-success">ADD MENU ITEM</a>
 
                     </div>
                     <div class="clearfix mb-3"></div>
@@ -55,21 +68,25 @@
                           <th>Edit</th>
                           <th>Delete</th>
                         </tr>
-                        <tr>
-                          <td>
-                          <td>HOME</td>
-                          <td>10-02-2019</td>
-                          <td>
-                            <a href="editMenu.php">
-                              <div class="badge badge-warning">Edit</div>
-                            </a>
-                          </td>
-                          <td>
-                            <a href="#">
-                              <div class="badge badge-danger">Delete</div>
-                            </a>
-                          </td>
-                        </tr>
+                        <?php
+                        foreach ($data as $row) {
+                        ?>
+                          <tr>
+                            <td>
+                            <td><?= $row['title'] ?></td>
+                            <td><?= $row['link'] ?></td>
+                            <td>
+                              <a href="editMenu.php?id=<?=$row['id']?>">
+                                <div class="badge badge-warning">Edit</div>
+                              </a>
+                            </td>
+                            <td>
+                              <a href="controllers/menuDeleteController.php?id=<?=$row['id']?>">
+                                <div class="badge badge-danger">Delete</div>
+                              </a>
+                            </td>
+                          </tr>
+                        <?php } ?>
                       </table>
                     </div>
                   </div>
