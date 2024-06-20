@@ -1,5 +1,9 @@
 <?php
-require('../modelClass.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require('AuthController.php');
 
 
 if (isset($_POST['submit'])) {
@@ -9,73 +13,69 @@ if (isset($_POST['submit'])) {
     $pass = $_POST['password'];
     $pass_confirm = $_POST['pass_confirm'];
 
-    if(empty($first_name) || empty($last_name) || empty($email) || empty($pass) || empty($pass_confirm)){
+    if (empty($first_name) || empty($last_name) || empty($email) || empty($pass) || empty($pass_confirm)) {
         header('location: ../register.php');
         exit();
+    } else {
+
+        $row = $auth->find($email);
+        if (!empty($row)) {
+            header('location: ../register.php');
+            exit();
+        } else {
+            $hashpass = md5($pass);
+
+            $data = [
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'email' => $email,
+                'pass' => $hashpass
+            ];
+
+            $auth->register($data);
+            header('location: ../dashboard.php');
+            exit();
+        }
     }
-    else{
-        
-    }
-
-    $data = [
-        'first_name'=> $first_name ,
-        'last_name' => $last_name,
-        'email' => $email,
-        'pass' => $pass
-    ];
-
-    $auth->register($data);
-
-
-
 }
 
 
 
 
-if(isset($_POST['submit'])){
+// if (isset($_POST['submit'])) {
 
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-    $pass_confirm = $_POST['pass_confirm'];
+//     $first_name = $_POST['first_name'];
+//     $last_name = $_POST['last_name'];
+//     $email = $_POST['email'];
+//     $pass = $_POST['password'];
+//     $pass_confirm = $_POST['pass_confirm'];
 
-    $database->query('SELECT * FROM users WHERE email = :email');
-    $database->bind(':email', $email);
-    $database->execute();
-    $row = $database->single();
-
-
-    if($row > 0){
-        header("Location: ../register.php");
-        exit();
-
-    }
-
-    if($pass !== $pass_confirm){
-
-        header("Location: ../register.php");
-        exit();
+//     $database->query('SELECT * FROM users WHERE email = :email');
+//     $database->bind(':email', $email);
+//     $database->execute();
+//     $row = $database->single();
 
 
-    }
+//     if ($row > 0) {
+//         header("Location: ../register.php");
+//         exit();
+//     }
+
+//     if ($pass !== $pass_confirm) {
+
+//         header("Location: ../register.php");
+//         exit();
+//     }
 
 
-    $database->query('INSERT INTO users(email, pass, first_name, last_name) VALUES(:email, :pass, :first_name, :last_name)');
-    $database->bind(':email', $email);
-    $database->bind(':pass', md5($pass));
-    $database->bind(':first_name', $first_name);
-    $database->bind(':last_name', $last_name);
+//     $database->query('INSERT INTO users(email, pass, first_name, last_name) VALUES(:email, :pass, :first_name, :last_name)');
+//     $database->bind(':email', $email);
+//     $database->bind(':pass', md5($pass));
+//     $database->bind(':first_name', $first_name);
+//     $database->bind(':last_name', $last_name);
 
-    $database->execute();
+//     $database->execute();
 
-    header("Location: ../index.php");
-    exit();
-
-
-
-
-
-
-}
+//     header("Location: ../index.php");
+//     exit();
+// }

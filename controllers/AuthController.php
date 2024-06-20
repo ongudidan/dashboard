@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require("../modelClass.php");
 // use Model;
@@ -13,10 +16,12 @@ class Authentication extends Model
 
     public function register($data = [])
     {
-
-        $this->query('INSERT INTO ' . $this->table() . ' (email, pass) VALUES(:email, :pass);');
+        $this->query('INSERT INTO ' . $this->table() . '(email, pass, first_name, last_name) VALUES(:email, :pass, :first_name, :last_name)');
         $this->bind(':email', $data['email']);
-        $this->bind(':pass', $data['password']);
+        $this->bind(':pass', $data['pass']);
+        $this->bind(':first_name', $data['first_name']);
+        $this->bind(':last_name', $data['last_name']);
+
         $this->execute();
 
         return true;
@@ -46,11 +51,11 @@ class Authentication extends Model
         $this->bind(':id', $id);
         $this->execute();
     }
-    protected function find($id)
+    public function find($email)
     {
 
-        $this->query('SELECT * FROM ' . $this->table() . ' WHERE id = :id;');
-        $this->bind(':id', $id);
+        $this->query('SELECT * FROM ' . $this->table() . ' WHERE email = :email;');
+        $this->bind(':email', $email);
         return $this->single();
     }
 }
