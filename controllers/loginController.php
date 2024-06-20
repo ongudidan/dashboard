@@ -6,38 +6,27 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-require('../modelClass.php');
-
+// require('../modelClass.php');
+require('AuthController.php');
 
 if (isset($_POST['submit'])) {
+  $pass = $_POST['password'];
+  $hashpass = md5($pass);
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+  // print_r($hashpass);
+  // exit();
 
-    $database->query('SELECT * FROM users WHERE email = :email AND pass = :pass;');
-    $database->bind(':email', $email);
-    $database->bind(':pass', md5($password));
+  $data = [
+    'email' => $_POST['email'],
+    'password' => $hashpass
+  ];
+  $login = $auth->login($data);
 
-    $database->execute();
-
-    $row = $database->single();
-
-    if (!empty($row)) {
-
-        if (md5($password) === $row['pass']) {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['email'] = $email;
-            header("Location: ../dashboard.php");
-
-        } else {
-            $_SESSION['error'] = "Invalid password.";
-            // unset($_SESSION['error']);
-            header("Location: ../login.php");
-            exit();
-        }
-    } else {
-        $_SESSION['error'] = "No user found with that email address.";
-        header("Location: ../login.php");
-        exit();
-    }
+  if ($login = true) {
+    header('location: ../dashboard.php');
+    exit();
+  } else {
+    header('location: ../login.php');
+    exit();
+  }
 }

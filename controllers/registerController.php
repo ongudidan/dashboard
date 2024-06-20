@@ -1,6 +1,38 @@
 <?php
 require('../modelClass.php');
 
+
+if (isset($_POST['submit'])) {
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $email = $_POST['email'];
+    $pass = $_POST['password'];
+    $pass_confirm = $_POST['pass_confirm'];
+
+    if(empty($first_name) || empty($last_name) || empty($email) || empty($pass) || empty($pass_confirm)){
+        header('location: ../register.php');
+        exit();
+    }
+    else{
+        
+    }
+
+    $data = [
+        'first_name'=> $first_name ,
+        'last_name' => $last_name,
+        'email' => $email,
+        'pass' => $pass
+    ];
+
+    $auth->register($data);
+
+
+
+}
+
+
+
+
 if(isset($_POST['submit'])){
 
     $first_name = $_POST['first_name'];
@@ -8,9 +40,6 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $pass = $_POST['password'];
     $pass_confirm = $_POST['pass_confirm'];
-
-    // print_r($_POST);
-    // exit();
 
     $database->query('SELECT * FROM users WHERE email = :email');
     $database->bind(':email', $email);
